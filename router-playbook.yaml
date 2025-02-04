@@ -1,0 +1,20 @@
+---
+- name: installing apache webserver
+  hosts: router
+  remote_user: ubuntu
+  become: yes
+
+  tasks:
+    - name: install apache
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: copy file with owner and permissions
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
